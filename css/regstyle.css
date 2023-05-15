@@ -1,0 +1,261 @@
+@import url('https://fonts.googlapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+body{
+    width: 100%;
+    background: rgb(238, 238, 238);
+    position: relative;
+    display: flex;
+}
+
+.navigation{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 15px 30px;
+    border-bottom: 3px solid #594ef7;
+    position: fixed;
+    width: calc(100% - 300px);
+}
+.navigation .search{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 14px;
+    border: 1px solid #d7dbe6;
+    border-radius: 4px;
+}
+#interface .navigation .search i{
+    margin-right: 14px;
+}
+.navigation .search input{
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+#menu{
+    background: #0059A5;
+    width: 300px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#menu .logo{
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 30px 0 0 30px;
+}
+
+#menu .logo h3{
+    font-weight: 400;
+}
+
+#menu .logo img{
+    width: 40px;
+    margin-right: 15px;
+}
+
+#menu .items{
+    margin-top: 80px;
+}
+
+#menu .items li{
+    list-style: none;
+    padding: 15px 0;
+    transition: 0.3s ease;
+}
+
+#menu .items a{
+    text-decoration: none;
+    color: white;
+    list-style: none;
+    padding: 15px 0;
+    transition: 0.3s ease;
+}
+/* #menu .items li i:nth-child(1){
+    border-left: 4px solid white;
+} */
+
+#menu .items li i{
+    color: white;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 14px;
+    margin: 0 10px 0 25px;
+}
+#menu .items li i:hover a,
+#menu .items li i:hover i{
+    color: #f3f4f6;
+}
+#menu .items li:hover{
+    background: #253047;
+    cursor: pointer;
+}
+#menu .items li a{
+    text-decoration: none;
+    color: white;
+    font-weight: 300px;
+    transition: 0.3s ease;
+}
+
+#form{
+    width: calc(100% - 300px);
+    margin-left: 300px;
+    position: relative;
+    display: flex;
+    height: 100vh;
+    /* justify-content: flex-start;
+    align-items: flex-start; */
+}
+
+.container{
+    width: 94%;
+    margin: 30px 0 30px 30px;
+    padding: 25px 30px;
+    overflow: auto;
+    background: white;
+    border-radius: 8px;
+}
+
+.i-name{
+    color: #444a53;
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 16px;
+}
+
+.name{
+    color: #444a53;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 24px;
+}
+
+.container .user-details{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 30px 0 12px 0;
+}
+
+.upload{
+    width: 100px;
+    /* position: relative; */
+    /* margin: auto; */
+}
+.upload img{
+    /* border-radius: 50%;
+    border: 6px solid #eaeaea; */
+    opacity: 40%;
+}
+
+.upload .round{
+    position: absolute;
+    /* bottom: 0; */
+    /* right: 0; */
+    background: #00B4FF;
+    width: 32px;
+    height: 32px;
+    line-height: 33px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.upload .round input[type='file']{
+    position: absolute;
+    transform: scale(2);
+    opacity: 0;
+}
+
+input[type=file]::-webkit-file-upload-button{
+    cursor: pointer;
+}
+
+.user-details .input-box{
+    margin-bottom: 36px;
+    width: calc(100% / 2 - 20px);
+}
+
+.user-details .input-box .details{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.user-details .input-box input{
+    height: 48px;
+    width: 100%;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding-left: 15px;
+    font-size: 16px;
+}
+
+.user-details .long-input-box{
+    margin-bottom: 36px;
+    width: 100%;
+}
+.user-details .long-input-box .details{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.user-details .long-input-box input{
+    height: 48px;
+    width: 100%;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding-left: 15px;
+    font-size: 16px;
+}
+
+.user-details .input-box select{
+    height: 48px;
+    width: 100%;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding-left: 15px;
+    font-size: 16px;
+}
+
+
+.user-details p.rad{
+    margin-bottom: 10px;
+}
+
+.user-details label.rad-space{
+    margin-right: 10px;
+}
+
+.button{
+    height: 48px;
+    margin: 48px 0;
+}
+.button input{
+    height: 100%;
+    width: 100%;
+    outline: none;
+    color: white;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    background: #0059A5;
+}
+
