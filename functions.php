@@ -108,7 +108,7 @@
             session_start();
             $_SESSION['id'] = $uidExists['id'];
             $_SESSION['phone_no'] = $uidExists['phone_no'];
-            header("location: index.php");
+            //header("location: index.php");
             exit();
         }
     }

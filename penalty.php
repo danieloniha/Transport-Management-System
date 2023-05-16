@@ -73,6 +73,9 @@
         <div class="button" id="submit">
             <a href="pen_form.php"><input type="submit" value="Penalize Driver"></a>
             </div>
+            <div class="button" id="submit" style="color: green;">
+            <a href="export.php"><input type="submit" value="Export"></a>
+            </div>
             <div class="board">
             <table width="100%">
                 <thead>

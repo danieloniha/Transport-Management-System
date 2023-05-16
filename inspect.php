@@ -36,7 +36,8 @@
 
     if(isset($_POST['submit'])){
 
-        $answer1 = $_POST['answer1'];
+        $answer1 = $_POST[$question['answer1']];
+        //die($answer1);
         $answer2 = $_POST['answer2'];
 
         $sql2 = "INSERT INTO answer_inspect(answer1, answer2) VALUES('$answer1', '$answer2')";
@@ -140,7 +141,7 @@
                 <div class="user-details">
                 <div class="input-box">
                         <span class="details">Inspection Type</span>
-                        <select name="inspector" id="inspector"  required> 
+                        <select name="inspector" id="inspector" > 
                             <option value="">Annual</option>
                             <option value="">Monthly</option>
                             <option value="">Casual</option>
@@ -169,7 +170,7 @@
                                     case 'radio':
                                         ?>
                                         <input type="hidden" name="question_id" >
-                                        <p class="rad">
+                                        <p class="rad" id="<?php echo htmlspecialchars($question['id']); ?>">
                                             <?php 
                                                 echo htmlspecialchars($question['question']);
                                             ?>
@@ -178,7 +179,7 @@
                                             {
                                         ?>
                                         <input type="radio" class="radio_button" name="answer1" value="<?php echo htmlspecialchars($question['answer1']); ?>">
-                                        <label for="<?php echo htmlspecialchars($question['answer1']); ?>" class="rad-space"><?php echo htmlspecialchars($question['answer1']); ?></label>
+                                        <label for="<?php echo htmlspecialchars($question['id']); ?>" class="rad-space"><?php echo htmlspecialchars($question['answer1']); ?></label>
                                         <?php 
                                             } 
                                         ?>
@@ -190,9 +191,29 @@
                                         <?php 
                                             } 
                                         ?>
+                                        <?php if($question['answer3'] != null)
+                                            {
+                                        ?>
+                                        <input type="radio" class="radio_button" name="answer3" value="<?php echo htmlspecialchars($question['answer3']); ?>">
+                                        <label for="<?php echo htmlspecialchars($question['answer3']); ?>" class="rad-space"><?php echo htmlspecialchars($question['answer3']); ?></label>
+                                        <?php 
+                                            } 
+                                        ?>
                                 <?php   
                                         break;
-                                    
+                                        
+                                        case 'dropdown':
+                                            ?>
+                                            <input type="hidden" name="question_id" >
+                                            <p class="rad" id="<?php echo htmlspecialchars($question['id']); ?>">
+                                                <?php 
+                                                    echo htmlspecialchars($question['question']);
+                                                ?>
+                                            </p> 
+                                            <!-- <select name="result" id="result"> 
+                                            <option value=""><?php echo htmlspecialchars($question['answer1']) ?></option> -->
+                                            
+                                    <?php 
                                     default:
                                         # code...
                                         break;
@@ -201,21 +222,21 @@
                             
                                 
                         <?php endforeach; ?>
-                        <p class="rad" id="question1">Does he have a fire extinguisher?</p>
+                        <!-- <p class="rad" id="question1">Does he have a fire extinguisher?</p>
                         <input type="radio" class="radio_button" name="answer1" value="Good">
                         <label for="Good" class="rad-space">Good</label>
                         <input type="radio" class="radio_button" name="answer1" value="Fair">
                         <label for="Fair" class="rad-space">Fair</label>
                         <input type="radio" class="radio_button" name="answer1" value="Bad">
-                        <label for="Bad" class="rad-space">Bad</label>
+                        <label for="Bad" class="rad-space">Bad</label> -->
                     </div>
-                    <div>
+                    <!-- <div>
                         <p class="rad" id="question2">Does he have hazard light?</p>
                         <input type="radio" class="radio_button" name="answer2" value="Yes">
                         <label for="Yes" class="rad-space">Yes</label>
                         <input type="radio" class="radio_button" name="answer2" value="No">
                         <label for="no" class="rad-space">No</label>
-                    </div>
+                    </div> -->
                     </div>
                 <div class="button" id="submit">
                     <input type="submit" name="submit" value="Submit">

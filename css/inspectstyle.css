@@ -205,11 +205,14 @@ body{
 
 .radio-details p.rad{
     margin-bottom: 10px;
+    margin-top: 36px;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .radio-details label.rad-space{
     margin-right: 32px;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .radio-details div{
@@ -232,4 +235,3 @@ body{
     letter-spacing: 1px;
     background: #0059A5;
 }
-

@@ -31,8 +31,8 @@
         $result = mysqli_query($conn, $sql);
         $registration = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        mysqli_free_result($result);
-        mysqli_close($conn);
+        // mysqli_free_result($result);
+        // mysqli_close($conn);
     }
     
 ?>
@@ -87,6 +87,54 @@
         <h3 class="i-name">
             Dashboard
         </h3>
+        <div class="cards">
+            <div class="card-single">
+                <div>
+                    <?php 
+                        $dash_drivers = "SELECT * FROM registration";
+                        $dash_drivers_num = mysqli_query($conn, $dash_drivers);
+
+                        if($dash_total = mysqli_num_rows($dash_drivers_num)){
+                            echo '<h1>'.$dash_total.'</h1>';
+                        } else {
+                            echo '<h1>0</h1>';
+                        }
+                    ?>
+                    
+                    <span class="card-text">Drivers</span>
+                </div>
+                <div>
+                    <span class="fa fa-solid fa-car" style="color: #0059a5;" aria-hidden="true"></span>
+                </div>
+            </div>
+            <div class="card-single">
+                <div>
+                    <h1>79</h1>
+                    <span class="card-text">Payments</span>
+                </div>
+                <div>
+                    <span class="fa fa-duotone fa-book" style="color: #0059a5;" aria-hidden="true"></span>
+                </div>
+            </div>
+            <div class="card-single">
+                <div>
+                    <h1>79</h1>
+                    <span class="card-text">Penalties</span>
+                </div>
+                <div>
+                    <span class="fa fa-solid fa-flag" style="color: #0059a5;" aria-hidden="true"></span>
+                </div>
+            </div>
+            <div class="card-single">
+                <div>
+                    <h1>79</h1>
+                    <span class="card-text">Drivers</span>
+                </div>
+                <div>
+                    <span class="fa fa-solid fa-car" style="color: #0059a5;" aria-hidden="true"></span>
+                </div>
+            </div>
+        </div>
         <div class="user-details">
             <div class="input-box" id="filter">
                         <span class="details">Mode</span>
@@ -218,3 +266,7 @@
     </script> -->
 </body>
 </html>
+<?php 
+    mysqli_free_result($result);
+    mysqli_close($conn);
+?>

@@ -157,6 +157,12 @@
                         <input type="date">
                         </select>
                     </div>
+                    <div class="input-box">
+                        <span class="details">Name of Penalizer</span>
+                        <select name="penalizer" id="penalizer"> 
+                        <option value="" disabled>--Select--</option>
+                        </select>
+                    </div>
                 </div>
                 
                 <div class="button" id="submit">
