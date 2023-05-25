@@ -44,3 +44,14 @@
 <div class="button" id="submit">
     <input type="submit" name="submit" value="Submit">
 </div>
+
+case 'dropdown':
+                                            ?>
+                                            <input type="hidden" name="question_id" >
+                                            <p class="rad" id="<?php echo htmlspecialchars($question['id']); ?>">
+                                                <?php 
+                                                    echo htmlspecialchars($question['question']);
+                                                ?>
+                                            </p> 
+                                            <!-- <select name="result" id="result"> 
+                                            <option value=""><?php echo htmlspecialchars($question['answer1']) ?></option> -->

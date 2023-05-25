@@ -22,24 +22,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="css/login.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login</title>
+  <link rel="stylesheet" href="css/login.css">
+  <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
-    <div class="loginbox">
-    <h1>Login</h1>
-    <form action="login.php" method="POST">
-        <p>Phone Number</p>
-        <input type="text" name="phone_no" placeholder="Enter Phone Number">
-        <p>Password</p>
+  <div class="container">
+    <input type="checkbox" id="check">
+    <div class="login form">
+      <header>Login</header>
+      <form action="login.php" method="POST">
+        <input type="text" name="phone_no" placeholder="Enter Username">
         <input type="password" name="pwd" placeholder="Enter Password">
-        <input type="submit" name="submit" value="Login">
-        <a href="#">Forgot your password?</a><br>
-        <a href="#">Don't have an account?</a>
-    </form>
-</div>
+        <a href="#">Forgot password?</a>
+        <input type="submit" name="submit" class="button" value="LOGIN">
+      </form>
+      <div class="signup">
+        <span class="signup">Don't have an account?
+         <a href="signup.php"><label for="">Signup</label></a>
+        </span>
+      </div>
+    </div>
+    
+  </div>
 </body>
 </html>

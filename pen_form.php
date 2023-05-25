@@ -20,9 +20,9 @@
         
         $result = mysqli_query($conn, $query);
         if(mysqli_num_rows($result)> 0){
-            echo '<option disabled value="" >Select Driver</option>';
+            echo '<option disabled value="" >Select Vehicle No</option>';
             while($row = mysqli_fetch_assoc($result)){
-                echo '<option value='.$row['reg_no'].'>'.$row['first_name'].'</option>';
+                echo '<option value='.$row['reg_no'].'>'.$row['reg_no'].'</option>';
             }
         } else {
             echo '<option value="">No Driver Record </option>';
@@ -35,10 +35,10 @@
         $offence = $_POST['offence'];
 
         $sql2 = "SELECT * FROM registration WHERE id = '$driver' ";
-        print_r($sql2);
+        //print_r($sql2);
         $result3 = mysqli_query($conn, $sql2);
         $registration = mysqli_fetch_assoc($result3);
-        print_r($registration);
+        //print_r($registration);
         $reg_no = $registration['reg_no'];
         
 
@@ -134,7 +134,7 @@
                         </select>
                     </div>
                     <div class="input-box">
-                        <span class="details">Driver</span>
+                        <span class="details">Vehicle No</span>
                         <select name="driver" id="driver"  required> 
                         </select>
                     </div>

@@ -25,9 +25,9 @@
         // $result = $db->query($query);
         $result = mysqli_query($conn, $query);
         if(mysqli_num_rows($result)> 0){
-            echo '<option value="">Select Driver</option>';
+            echo '<option value="">Select Vehicle No</option>';
             while($row = mysqli_fetch_assoc($result)){
-                echo '<option value='.$row['id'].'>'.$row['first_name'].'</option>';
+                echo '<option value='.$row['reg_no'].'>'.$row['reg_no'].'</option>';
             }
         } else {
             echo '<option value="">No Driver Record </option>';
@@ -36,56 +36,47 @@
 
     if(isset($_POST['submit'])){
 
-        $answer1 = $_POST[$question['answer1']];
-        //die($answer1);
-        $answer2 = $_POST['answer2'];
-
-        $sql2 = "INSERT INTO answer_inspect(answer1, answer2) VALUES('$answer1', '$answer2')";
-
-        if(mysqli_query($conn, $sql2)){
-            $sql3 = "SELECT id FROM answer_inspect ";
-            $result2 = mysqli_query($conn, $sql3);
-            $id = mysqli_fetch_assoc($result2);
-            print_r($id['id']);
+        $driver = $_POST['driver'];
+        $sql6 = "SELECT * FROM registration WHERE reg_no = '$driver' ";
+        $result3 = mysqli_query($conn, $sql6);
+        $registration = mysqli_fetch_assoc($result3);
+        $reg_no = $registration['reg_no'];
+        
+        foreach($questions as $question){
+            $question_id = $_POST['question' . $question['id']];
+            $answer = $_POST['answer' . $question['id']];
             
-            $sql4 = "INSERT INTO ques_answer_inspect(a_id, q_id) VALUES('$id[id]', '$id[id]) ";
-            // $sql5 = "INSERT INTO ques_answer_inspect(q_id) VALUES('$id') ";
+            
+            $sql4 = "INSERT INTO ques_answer_inspect(q_id, answer) VALUES('$question_id', '$answer')";
 
             if(mysqli_query($conn, $sql4)){
-                if(mysqli_query($conn, $sql5)){
 
-                    $driver = $_POST['driver'];
-
-                    $sql6 = "SELECT reg_no FROM registration WHERE reg_no = '$driver' ";
-                    $result3 = mysqli_query($conn, $sql6);
-                    $result3 = mysqli_query($conn, $sql2);
-                    $registration = mysqli_fetch_assoc($result3);
-                    $reg_no = $registration['reg_no'];
-
-                    $sql7 = "INSERT INTO inspect(reg_no, question_id, answer_id) VALUES('$reg_no', '$id', '$id') ";
+                $sql5 = "SELECT * FROM ques_answer_inspect";
+                $res4 = mysqli_query($conn, $sql5);
+                $id = mysqli_fetch_assoc($res4);
+                $inspect_id = $id['id'];
+    
+                
+                $sql7 = "INSERT INTO driver_inspect(inspect_id, reg_no) VALUES('$inspect_id', '$reg_no')";
+    
+                if(mysqli_query($conn, $sql7)){
                     
-                    if(mysqli_query($conn, $sql7)){
-
-                    } else {
-                    // error
-                    echo 'query error: ' . mysqli_error($conn);
-                }
-
                 } else {
                     // error
                     echo 'query error: ' . mysqli_error($conn);
-                }
+                }          
+    
+                header('Location: inspect.php');
+    
             } else {
                 // error
                 echo 'query error: ' . mysqli_error($conn);
-            }          
-
-            header('Location: inspect.php');
-
-        } else {
-            // error
-            echo 'query error: ' . mysqli_error($conn);
+            }
         }
+
+        // $sql2 = "INSERT INTO answer_inspect(answer1, answer2) VALUES('$answer1', '$answer2')";
+
+        
         
     }
 
@@ -169,7 +160,7 @@
                                 switch ($question['type']) {
                                     case 'radio':
                                         ?>
-                                        <input type="hidden" name="question_id" >
+                                        <input type="hidden" name="<?php echo 'question' . htmlspecialchars($question['id'])?>" value="<?php echo htmlspecialchars($question['id']); ?>">
                                         <p class="rad" id="<?php echo htmlspecialchars($question['id']); ?>">
                                             <?php 
                                                 echo htmlspecialchars($question['question']);
@@ -178,7 +169,7 @@
                                         <?php if($question['answer1'] != null)
                                             {
                                         ?>
-                                        <input type="radio" class="radio_button" name="answer1" value="<?php echo htmlspecialchars($question['answer1']); ?>">
+                                        <input type="radio" class="radio_button" name="<?php echo 'answer' . htmlspecialchars($question['id'])?>" value="<?php echo htmlspecialchars($question['answer1']); ?>">
                                         <label for="<?php echo htmlspecialchars($question['id']); ?>" class="rad-space"><?php echo htmlspecialchars($question['answer1']); ?></label>
                                         <?php 
                                             } 
@@ -186,7 +177,7 @@
                                         <?php if($question['answer2'] != null)
                                             {
                                         ?>
-                                        <input type="radio" class="radio_button" name="answer2" value="<?php echo htmlspecialchars($question['answer2']); ?>">
+                                        <input type="radio" class="radio_button" name="<?php echo 'answer' . htmlspecialchars($question['id'])?>" value="<?php echo htmlspecialchars($question['answer2']); ?>">
                                         <label for="<?php echo htmlspecialchars($question['answer2']); ?>" class="rad-space"><?php echo htmlspecialchars($question['answer2']); ?></label>
                                         <?php 
                                             } 
@@ -194,26 +185,14 @@
                                         <?php if($question['answer3'] != null)
                                             {
                                         ?>
-                                        <input type="radio" class="radio_button" name="answer3" value="<?php echo htmlspecialchars($question['answer3']); ?>">
+                                        <input type="radio" class="radio_button" name="<?php echo 'answer' . htmlspecialchars($question['id'])?>" value="<?php echo htmlspecialchars($question['answer3']); ?>">
                                         <label for="<?php echo htmlspecialchars($question['answer3']); ?>" class="rad-space"><?php echo htmlspecialchars($question['answer3']); ?></label>
                                         <?php 
                                             } 
                                         ?>
                                 <?php   
                                         break;
-                                        
-                                        case 'dropdown':
-                                            ?>
-                                            <input type="hidden" name="question_id" >
-                                            <p class="rad" id="<?php echo htmlspecialchars($question['id']); ?>">
-                                                <?php 
-                                                    echo htmlspecialchars($question['question']);
-                                                ?>
-                                            </p> 
-                                            <!-- <select name="result" id="result"> 
-                                            <option value=""><?php echo htmlspecialchars($question['answer1']) ?></option> -->
-                                            
-                                    <?php 
+                                                                               
                                     default:
                                         # code...
                                         break;

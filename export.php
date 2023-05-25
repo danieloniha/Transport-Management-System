@@ -10,7 +10,7 @@
     }
 
 // Excel file name for download 
-$fileName = "members-data_" . date('Y-m-d') . ".xls"; 
+$fileName = "penalty-data_" . date('Y-m-d') . ".xls"; 
  
 // Column names 
 $fields = array('NO', 'REGNO', 'NAME', 'MODE', 'OFFENCE', 'PENALTY'); 
@@ -19,7 +19,7 @@ $fields = array('NO', 'REGNO', 'NAME', 'MODE', 'OFFENCE', 'PENALTY');
 $excelData = implode("\t", array_values($fields)) . "\n"; 
  
 // Fetch records from database 
-$query = "SELECT * FROM registration r, driver_penalty d, penalty p WHERE r.reg_no = d.reg_no AND d.penalty_id = p.id" ;
+$query = "SELECT * FROM registration r, driver_penalty d, penalty p WHERE r.reg_no = d.reg_no AND d.penalty_id = p.id ";
 $result = mysqli_query($conn, $query);
 if($result->num_rows > 0){ 
     // Output each row of the data 

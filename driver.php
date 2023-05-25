@@ -373,9 +373,6 @@
                 <div class="button" id="submit">
                     <input type="submit" name="submit" value="Submit">
                 </div>
-                <div class="button2" id="cancel">
-                    <input type="submit" name="cancel" value="Cancel">
-                </div>
             </form>
         </div>
     </section>

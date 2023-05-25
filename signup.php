@@ -2,6 +2,8 @@
 
     include('config/db_connect.php');
 
+    $errors = "";
+
     if(isset($_POST['submit'])){
 
         $username = $_POST['username'];
@@ -12,7 +14,8 @@
         require ('functions.php');
 
         if(emptyInputSignUp($username, $phone_no, $pwd, $pwd_repeat) !== false){
-            header("location: signup.php?emptydata");
+            $errors = "empty data";
+            header("location: signup.php?emptydata");   
             exit();
         }
         if(invalidUid($username) !== false){
@@ -24,6 +27,7 @@
             exit();
         }
         if(pwdMatch($pwd, $pwd_repeat) !== false){
+            $errors = "Password don't match";
             header("location: signup.php?passworddontmatch");
             exit();
         }
@@ -40,35 +44,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up Page</title>
-    <link rel="stylesheet" href="css/signup.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="css/login.css">
+  <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
-    <div class="loginbox">
-    <h1>Sign Up</h1>
-    <form action="signup.php" method="POST">
-        <p>Username</p>
+  <div class="container">
+    <input type="checkbox" id="check">
+    <div class="login form">
+    <header>Signup</header>
+    <p class="errors"><?php echo $errors; ?></p>
+      <form action="signup.php" method="POST">
         <input type="text" name="username" placeholder="Enter Username">
-        <p>Phone Number</p>
         <input type="text" name="phone_no" placeholder="Enter Phone Number">
-        <?php 
-            if(isset($_GET['error'])){
-                if($_GET['error'] == "invalidnumber"){
-                    echo "<h5>Invalid Phone Number</h5>";
-                }
-            }
-        ?>
-        <p>Password</p>
-        <input type="password" name="pwd" placeholder="Enter Password">
-        <p>Confirm Password</p>
-        <input type="password" name="pwd_repeat" placeholder="Confirm Password">
-        <input type="submit" name="submit" value="Sign Up">
-        <a href="#">Already a User? Log In</a><br>
-        <!-- <a href="#">Don't have an account?</a> -->
-    </form>
-</div>
+        <input type="password" name="pwd" placeholder="Enter your password">
+        <input type="password" name="pwd_repeat" placeholder="Confirm your password">
+        <input type="submit" name="submit" class="button" value="SIGN UP">
+      </form>
+      <div class="signup">
+        <span class="signup">Already have an account?
+         <a href="login.php"><label for="">Login</label></a>
+        </span>
+      </div>
+    </div>
+    <div class="registration form">
+      <header>Signup</header>
+      <form action="signup.php" method="POST">
+        <input type="text" name="username" placeholder="Enter Username">
+        <input type="text" name="phone_no" placeholder="Enter Phone Number">
+        <input type="password" name="pwd" placeholder="Enter your password">
+        <input type="password" name="pwd_repeat" placeholder="Confirm your password">
+        <input type="submit" name="submit1" class="button" value="SIGN UP">
+      </form>
+      <div class="signup">
+        <span class="signup">Already have an account?
+         <label for="check">Login</label>
+        </span>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
