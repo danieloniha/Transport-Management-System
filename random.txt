@@ -55,3 +55,101 @@ case 'dropdown':
                                             </p> 
                                             <!-- <select name="result" id="result"> 
                                             <option value=""><?php echo htmlspecialchars($question['answer1']) ?></option> -->
+
+Index B
+<div class="user-details">
+
+            <div class="input-box" id="filter">
+                        <span class="details">Mode</span>
+                        <select name="fetchval" id="fetchval" onchange="selectMode()">
+                        <option value="All">All</option>
+                        <?php while($row = mysqli_fetch_array($res)): ?>
+                            <option value="<?php echo $row['mode']; ?>"><?php echo $row['mode']; ?></option>
+                            <!-- <option value="All">All</option>
+                            <option value="Shuttle">Shuttle</option>
+                            <option value="Cab">Cab</option> -->
+                        <?php endwhile; ?>
+                        </select>
+                    </div>
+        <div class="button" id="submit">
+            <a href="form.php"><input type="submit" value="Add User"></a>
+            </div></div>
+            <div class="board">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <td>No</td>
+                        <td>RegNo</td>
+                        <td>Name</td>
+                        <td>Phone No</td>
+                        <!-- <td>Address</td> -->
+                        <!-- <td>DOB</td> -->
+                        <td>Mode</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody id="ans">             
+
+                 <?php $count = 1; foreach($registration as $driver){ ?>
+                    <tr scope="row">
+                        <td class="driver">
+                            <div class="driver-id">
+                                <h5><?php echo $count++; ?></h5>
+                            </div>
+                        </td>
+                        <td class="driver">
+                            <div class="driver-de">
+                                <h5><?php echo htmlspecialchars($driver['reg_no']); ?></h5>
+                            </div>
+                        </td>
+                        <td class="driver-phone">
+                            <h5><?php echo htmlspecialchars($driver['first_name'] . ' ' . $driver['last_name']); ?></h5>
+                            <!-- <p>Web Dev</p> -->
+                        </td>
+                        <td class="driver-plate">
+                            <h5><?php echo htmlspecialchars($driver['phone_no']); ?></h5>
+                        </td>
+                        <td class="driver-reg">
+                            <h5><?php echo htmlspecialchars($driver['mode']); ?></h5>
+                        </td>
+                        <td class="edit"><a href="details.php?id=<?php echo htmlspecialchars($driver['id']); ?>">View</a></td>
+                        <td class="edit"><a href="update.php?id=<?php echo htmlspecialchars($driver['id']); ?>">Edit</a></td>
+                        <td class="edit"><a href="delete.php?id=<?php echo htmlspecialchars($driver['id']); ?>">Delete</a></td>
+                        <!-- <td class="edit"><form action="index.php" method="POST">
+                            <input type="hidden" name="id_to_delete" value="<?php echo $registration['id'] ?>">
+                            <input type="submit" name="delete" class="edit_delete" value="Delete">
+                        </form>
+                        </td> -->
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+
+    <script>
+        const paymentForm = document.getElementById('paymentForm');
+paymentForm.addEventListener("submit", payWithPaystack, false);
+function payWithPaystack(e) {
+  e.preventDefault();
+
+  let handler = PaystackPop.setup({
+    key: 'pk_test_dc355c64a5241254bfbc5b54a517b86cb6682723', // Replace with your public key
+    email: document.getElementById("email-address").value,
+    amount: document.getElementById("penalty-amount-" + payment).value * 100,
+    // amount: document.getElementById("amount").value * 100,
+    ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+    // label: "Optional string that replaces customer email"
+    onClose: function(){
+        window.location = "http://localhost/project_php/pay.php?transaction=cancelled";
+      alert('Transaction Cancelled.');
+    },
+    callback: function(response){
+      let message = 'Payment complete! Reference: ' + response.reference;
+      alert(message);
+      window.location = "http://localhost/project_php/verify_transaction.php?reference=" + response.reference;
+    }
+  });
+
+  handler.openIframe();
+}
+    </script>

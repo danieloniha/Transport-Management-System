@@ -62,8 +62,8 @@
         mysqli_stmt_close($stmt);
     }
 
-    function createUser($conn, $username, $phone_no, $pwd){
-        $sql = "INSERT INTO login (username, phone_no, password) VALUES(?, ?, ?);";
+    function createUser($conn, $username, $phone_no, $email, $usertype, $pwd){
+        $sql = "INSERT INTO login (username, phone_no, email, usertype, password) VALUES(?, ?, ?, ?, ?);";
         $stmt = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt, $sql)){
@@ -73,10 +73,20 @@
 
         $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
-        mysqli_stmt_bind_param($stmt, "sss", $username, $phone_no, $hashedPwd);
+        mysqli_stmt_bind_param($stmt, "sssss", $username, $phone_no, $email, $usertype, $hashedPwd);
         mysqli_stmt_execute($stmt);
+        // $sql1 = "INSERT INTO registration(phone_no)VALUES($phone_no)";
+        // if(mysqli_query($conn, $sql1)){
+
+        // } else {
+        //     echo 'query error: ' . mysqli_error($conn);
+        // }
+        session_start();
+        $_SESSION['phone_no'] = $phone_no;
+        $_SESSION['email'] = $email;
+        //die($phone_no);
         mysqli_stmt_close($stmt);
-        header("location: signup.php?error=none");
+        header("location: reg.php?error=none");
         exit();
     }
 
@@ -93,7 +103,8 @@
     function loginUser($conn, $phone_no, $pwd){
         $uidExists = uidExists($conn, $phone_no, $phone_no);
 
-        if($uidExists === false){
+        if($uidExists === false){  
+            $_SESSION['status'] =  "Wrong Login";
             header("location: login.php?error=wronglogin");
             exit();
         }
@@ -102,13 +113,19 @@
         $checkPwd = password_verify($pwd, $pwdHashed);
 
         if($checkPwd === false){
+            $_SESSION['status'] =  "Wrong Password";
             header("location: login.php?error=wrongpassword");
             exit();
         } else if ($checkPwd === true){
             session_start();
             $_SESSION['id'] = $uidExists['id'];
             $_SESSION['phone_no'] = $uidExists['phone_no'];
-            header("location: index.php");
+            if($_SESSION['usertype'] == 'admin'){
+                header("location: index.php");
+            } else {
+                header("location: index2.php");
+            }
+            
             exit();
         }
     }

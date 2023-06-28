@@ -1,8 +1,8 @@
 <?php 
-
+    session_start();
     include('config/db_connect.php');
 
-    $sql = "SELECT * FROM registration r, driver_penalty d, penalty p WHERE r.reg_no = d.reg_no AND d.penalty_id = p.id" ;
+    $sql = "SELECT * FROM registration r, penalty p, driver_penalty d WHERE r.reg_no = d.reg_no AND d.penalty_id = p.id" ;
     // $sql = "SELECT registration.*, driver_penalty.*, penalty.*
     // FROM registration
     // JOIN driver_penalty ON registration.reg_no = driver_penalty.reg_no
@@ -20,7 +20,9 @@
     // }
     //die($result);
     $penalties = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
+    // $query = "SELECT * FROM driver_penalty";
+    // $res = mysqli_query($conn, $query);
+    // $pen = mysqli_fetch_assoc($res);
 ?>
 
 
@@ -30,14 +32,10 @@
 <html lang="en">
     <?php include('templates/header.php') ?>
     <link rel="stylesheet" href="css/penstyle.css">
-<!-- <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="tabstyle.css">
-</head> -->
+    <link rel="stylesheet" href="sweetalert2.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
 <body>
     <?php include('templates/nav.php') ?>
     <!-- <section id='menu'>
@@ -115,13 +113,9 @@
                             <h5><?php echo htmlspecialchars($penalty['penalty']); ?></h5>
                         </td>
                         <td class="edit"><a href="">View</a></td>
-                        <td class="edit"><a href="#">Edit</a></td>
-                        <!-- <td class="edit"><a href="#">Delete</a></td> -->
-                        <!-- <td class="edit"><form action="index.php" method="POST">
-                            <input type="hidden" name="id_to_delete" value="<?php echo $registration['id'] ?>">
-                            <input type="submit" name="delete" class="edit_delete" value="Delete">
-                        </form>
-                        </td> -->
+                        <td class="edit"><a href="pen_edit.php?id=<?php echo htmlspecialchars($penalty['id']);?>">Edit</a></td>
+                        <td class="edit"><a href="pen_del.php?id=<?php echo htmlspecialchars($penalty['id']); ?>">Delete</a></td>
+                        
                     </tr>
                     <?php } ?>
                 </tbody>

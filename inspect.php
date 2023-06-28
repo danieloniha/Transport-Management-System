@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
     include('config/db_connect.php');
 
     $sql = "SELECT * FROM registration";
@@ -16,6 +16,9 @@
     $res3 = mysqli_query($conn, $query3);
     $type = mysqli_fetch_assoc($res3);
 
+    $sql2 = "SELECT * FROM staff";
+    $result4 = mysqli_query($conn, $sql2);
+
 
     if(isset($_POST['mode_id'])){
         $mode_id = $_POST['mode_id'];
@@ -27,7 +30,7 @@
         if(mysqli_num_rows($result)> 0){
             echo '<option value="">Select Vehicle No</option>';
             while($row = mysqli_fetch_assoc($result)){
-                echo '<option value='.$row['reg_no'].'>'.$row['reg_no'].'</option>';
+                echo '<option value='.$row['id'].'>'.$row['reg_no'].'</option>';
             }
         } else {
             echo '<option value="">No Driver Record </option>';
@@ -37,47 +40,51 @@
     if(isset($_POST['submit'])){
 
         $driver = $_POST['driver'];
-        $sql6 = "SELECT * FROM registration WHERE reg_no = '$driver' ";
+        
+        $sql6 = "SELECT * FROM registration WHERE id = '$driver' ";
         $result3 = mysqli_query($conn, $sql6);
         $registration = mysqli_fetch_assoc($result3);
         $reg_no = $registration['reg_no'];
+
+        $sql5 = "INSERT INTO driver_inspect(reg_no) VALUES('$reg_no')";
         
-        foreach($questions as $question){
-            $question_id = $_POST['question' . $question['id']];
-            $answer = $_POST['answer' . $question['id']];
-            
-            
-            $sql4 = "INSERT INTO ques_answer_inspect(q_id, answer) VALUES('$question_id', '$answer')";
+        
 
-            if(mysqli_query($conn, $sql4)){
+        if(mysqli_query($conn, $sql5)){
+        
+            foreach($questions as $question){
+                $question_id = $_POST['question' . $question['id']];
+                $answer = $_POST['answer' . $question['id']];
 
-                $sql5 = "SELECT * FROM ques_answer_inspect";
-                $res4 = mysqli_query($conn, $sql5);
+                $sql7 = "SELECT * FROM driver_inspect";
+                $res4 = mysqli_query($conn, $sql7);
                 $id = mysqli_fetch_assoc($res4);
                 $inspect_id = $id['id'];
-    
                 
-                $sql7 = "INSERT INTO driver_inspect(inspect_id, reg_no) VALUES('$inspect_id', '$reg_no')";
-    
-                if(mysqli_query($conn, $sql7)){
-                    
-                } else {
-                    // error
-                    echo 'query error: ' . mysqli_error($conn);
-                }          
-    
-                header('Location: inspect.php');
-    
-            } else {
-                // error
-                echo 'query error: ' . mysqli_error($conn);
-            }
-        }
+                $sql4 = "INSERT INTO ques_answer_inspect(q_id, answer, inspect_id) VALUES('$question_id', '$answer', '$inspect_id')";
 
+                if(mysqli_query($conn, $sql4)){         
+                    $_SESSION['status'] = "Inspection Submitted";
+                    $_SESSION['status_code'] = "success";
+                    header('Location: inspect.php');
+        
+                } else {
+                    $_SESSION['status'] = "Inspection failure";
+                    $_SESSION['status_code'] = "error";
+                    echo 'query error: ' . mysqli_error($conn);
+                }
+            }
+        } else {
+            echo 'query error: ' . mysqli_error($conn);
+        }
         // $sql2 = "INSERT INTO answer_inspect(answer1, answer2) VALUES('$answer1', '$answer2')";
 
         
         
+    }
+
+    if(isset($_POST['cancel'])){
+        header('Location: index.php');
     }
 
 ?>
@@ -87,11 +94,14 @@
 <html lang="en">
     <?php include('templates/header.php') ?>
     <link rel="stylesheet" href="css/inspectstyle.css">
+    <link rel="stylesheet" href="sweetalert2.min.css">
     <script type="text/javascript" src="js/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
     crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
     <script>
         $(document).ready(function(){
         $("#driver").change(function(){
@@ -140,7 +150,7 @@
                     </div>
                     <div class="input-box">
                         <span class="details">Mode</span>
-                        <select name="mode" id="mode" onchange="fetchDriver(this.value)" required>
+                        <select name="mode" id="mode" onchange="fetchDriver(this.value)" >
                             <option >--Select--</option>
                             <?php while($row = mysqli_fetch_array($res)): ?>
                             <option value="<?php echo $row['mode']; ?>"><?php echo $row['mode']; ?></option>
@@ -148,8 +158,17 @@
                         </select>
                     </div>
                     <div class="input-box">
-                        <span class="details">Driver</span>
-                        <select name="driver" id="driver"  required> 
+                        <span class="details">Vehicle No</span>
+                        <select name="driver" id="driver"  > 
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Name of Inspector</span>
+                        <select name="penalizer" id="penalizer"> 
+                        <option value="" >--Select--</option>
+                        <?php while($row = mysqli_fetch_array($result4)){ ?>
+                        <option value="<?php echo $row[0]; ?>"><?php echo $row[1] . ' ' . $row[3] ?></option>
+                        <?php } ?>
                         </select>
                     </div>
                 </div>
@@ -220,6 +239,9 @@
                 <div class="button" id="submit">
                     <input type="submit" name="submit" value="Submit">
                 </div>
+                <div class="button2" id="cancel">
+                    <input type="submit" name="cancel" value="Cancel">
+                </div>
             </form>
         </div>
     </section>
@@ -236,5 +258,21 @@
             })
         }
     </script> -->
+    <script>
+        session_code = `<?php echo isset($_SESSION['status_code']) ? $_SESSION['status_code'] : NULL ;?>`;
+        session_val = `<?php echo isset($_SESSION['status']) ? $_SESSION['status'] : NULL ;?>`;
+
+        console.log(session_code.session_val);
+        if(session_val != ''){
+            Swal.fire({
+                icon: session_code,
+                title: session_val,
+            });   
+        }
+    </script>
+        <?php 
+                unset($_SESSION['status_code']);
+                unset($_SESSION['status']);
+            ?>
 </body>
 </html>

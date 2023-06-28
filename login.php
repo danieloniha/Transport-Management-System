@@ -1,5 +1,5 @@
 <?php 
-
+    session_start();
     include('config/db_connect.php');
 
     if(isset($_POST['submit'])){
@@ -26,6 +26,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Login</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/login.css">
   <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
@@ -34,6 +35,14 @@
     <input type="checkbox" id="check">
     <div class="login form">
       <header>Login</header>
+      <?php
+
+        if(isset($_SESSION['status']) && $_SESSION['status'] !='') 
+        {
+          echo '<h2 class="alert alert-danger text-white"> '.$_SESSION['status'].' </h2>';
+          unset($_SESSION['status']);
+        }
+        ?>
       <form action="login.php" method="POST">
         <input type="text" name="phone_no" placeholder="Enter Username">
         <input type="password" name="pwd" placeholder="Enter Password">

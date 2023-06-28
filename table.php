@@ -1,5 +1,5 @@
 <?php
-    
+    session_start();
     include('config/db_connect.php');
 
     $query = "SELECT DISTINCT mode FROM registration";
@@ -85,7 +85,7 @@
             </div>
         </div>
         <h3 class="i-name">
-            Dashboard
+            Driver Details
         </h3>
         <div class="user-details">
             <div class="input-box" id="filter">
@@ -155,24 +155,6 @@
             </table>
         </div>
         <script>
-            // $(document).ready(function(){
-            //     $("#fetchval").on('change',function(){
-            //         var value = $(this).val();
-            //         alert(value);
-    
-            //         // $.ajax({
-            //         //     url: "fetch.php",
-            //         //     type:"POST",
-            //         //     data:'request=' + value,
-            //         //     beforeSend:function(){
-
-            //         //     },
-            //         //     success:function(data){
-            //         //         $(".container").html*(data)
-            //         //     }
-            //         // });
-            //     });
-            // });
             document.addEventListener("DOMContentLoaded", () => {
                 const rows = document.querySelectorAll("tr[data-href]");
 
@@ -183,11 +165,6 @@
                 });
             });
 
-            // function addRow () {
-            //     document.querySelector("tbody").insertAdjacentHTML("beforeend", `
-                
-            //     `);
-            // };
 
             $(document).ready(function () {
                 $(document.body).on("click", "tr[data-href]", function () {
@@ -196,26 +173,7 @@
             });
         </script>
     </section>
-    <!-- <script>
-        $(document).ready(function(){
-                $("#fetchval").on('change',function(){
-                    var value = $(this).val();
-                    alert(value);
-    
-                    $.ajax({
-                        url:"fetch.php",
-                        type:"POST",
-                        data:'request=' + value,
-                        beforeSend:function(){
 
-                        },
-                        success:function(data){
-                            $(".container").html*(data)
-                        }
-                    });
-                });
-            });
-    </script> -->
 </body>
 </html>
 <?php 

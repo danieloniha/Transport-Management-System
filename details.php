@@ -1,5 +1,5 @@
 <?php 
-
+    session_start();
     include('config/db_connect.php');
 
     if(isset($_GET['id'])){
@@ -48,7 +48,7 @@
     </section> -->
     <section id="form">
         <div class="container">
-            <h3 class="i-name">Dashboard</h3>
+            <h3 class="i-name">Registration</h3>
             <?php if($registration): ?>
             <!-- <div class="title">Registration</div> -->
             <form action="update.php?id_new=<?php echo $id; ?>">

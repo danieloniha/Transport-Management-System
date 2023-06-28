@@ -20,7 +20,7 @@
         } else {
             echo 'query error: ' . mysqli_error($conn);
         }
-        header('Location: index.php');
+        header('Location: table.php');
     } else {
         echo 'query error: ' . mysqli_error($conn);
     }

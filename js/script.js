@@ -33,5 +33,22 @@ function fetchDriver(id){
     })
 }
 
+function fetchDriverE(id){
+    console.log('in')
+    $('#driver').html('');  
 
+    $.ajax({
+        method: 'POST',
+        url: 'pen_edit.php',
+        data: {mode_id: id},
+        success: function(data){
+            console.log(data)
+            $('#driver').html(data);
+        },
+        error: function(data){
+            
+            console.log(data)
+        }
+    })
+}
 

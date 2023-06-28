@@ -1,12 +1,13 @@
 <?php 
+    session_start();
     include('config/db_connect.php');
 
-    $reg_no = $first_name = $last_name = $phone_no = $mode = $address = $dob = $state = $lga = $middle_name = $gender = $nok_firstname = $nok_lastname = $nok_middlename = $nok_phoneno = $nok_address = $nok_relationship = $plate_no = $vehicle_name = $vehicle_colour = $image = '';
-    $errors = array('reg_no' => '', 'first_name'=> '', 'last_name' => '', 'phone_no' => '', 'mode' => '', 'address' => '', 'dob' => '', 'middle_name' => '', 'gender' => '', 'nok_firstname' => '', 'nok_middlename' => '', 'nok_lastname' => '', 'nok_relationship' => '', 'nok_phoneno' => '', 'nok_address' => '', 'plate_no' => '', 'vehicle_name' => '', 'vehicle_colour' => '' , 'image' => '');
+    $reg_no = $first_name = $last_name = $phone_no = $email = $mode = $address = $dob = $state = $lga = $middle_name = $gender = $nok_firstname = $nok_lastname = $nok_middlename = $nok_phoneno = $nok_address = $nok_relationship = $nok_dob = $plate_no = $vehicle_name = $vehicle_colour = $drivers_license = $fileDestination = '';
+    $errors = array('reg_no' => '', 'first_name'=> '', 'last_name' => '', 'phone_no' => '', 'mode' => '', 'address' => '', 'state' => '',  'lga' => '', 'dob' => '', 'middle_name' => '', 'gender' => '', 'nok_firstname' => '', 'nok_middlename' => '', 'nok_lastname' => '', 'nok_relationship' => '', 'nok_dob' => '', 'nok_phoneno' => '', 'nok_address' => '', 'plate_no' => '', 'vehicle_name' => '', 'vehicle_colour' => '' , 'image' => '');
 
     if(isset($_POST['submit'])){
-        
-        print_r($_POST);
+    
+        //print_r($_POST);
 
         if(empty($_POST['reg_no'])){
             $errors['reg_no'] = 'A reg no is required <br />';
@@ -47,6 +48,90 @@
             }
         }
 
+        if(empty($_POST['gender'])){
+            $errors['gender'] = 'Choose a gender <br />';
+        }else{
+            $gender = $_POST['gender'];
+        }
+
+        if(empty($_POST['mode'])){
+            $errors['mode'] = 'Choose a mode <br />';
+        }else{
+            $mode = $_POST['mode'];
+        }
+
+        if(empty($_POST['address'])){
+            $errors['address'] = 'An address is required <br />';
+        }else{
+            $address = $_POST['address'];
+        }
+        
+        if(empty($_POST['dob'])){
+            $errors['dob'] = 'Date of Birth is required <br />';
+        }else{
+            $dob = $_POST['dob'];
+        }
+
+        if(empty($_POST['state'])){
+            $errors['state'] = 'State is required <br />';
+        }else{
+            $state = $_POST['state'];
+        }
+
+        if(empty($_POST['lga'])){
+            $errors['lga'] = 'An lga is required <br />';
+        }else{
+            $lga = $_POST['lga'];
+        }
+
+        if(empty($_POST['nok_firstname'])){
+            $errors['nok_firstname'] = 'This is required <br />';
+        }else{
+            $nok_firstname = $_POST['nok_firstname'];
+        }
+
+        if(empty($_POST['nok_lastname'])){
+            $errors['nok_lastname'] = 'This is required <br />';
+        }else{
+            $nok_lastname = $_POST['nok_lastname'];
+        }
+
+        if(empty($_POST['nok_phoneno'])){
+            $errors['nok_phoneno'] = 'This is required <br />';
+        }else{
+            $nok_phoneno = $_POST['nok_phoneno'];
+        }
+
+        if(empty($_POST['nok_relationship'])){
+            $errors['nok_relationship'] = 'This is required <br />';
+        }else{
+            $nok_relationship = $_POST['nok_relationship'];
+        }
+        
+        if(empty($_POST['nok_address'])){
+            $errors['nok_address'] = 'This is required <br />';
+        }else{
+            $nok_address = $_POST['nok_address'];
+        }
+
+        if(empty($_POST['plate_no'])){
+            $errors['plate_no'] = 'This is required <br />';
+        }else{
+            $plate_no = $_POST['plate_no'];
+        }
+
+        if(empty($_POST['vehicle_name'])){
+            $errors['vehicle_name'] = 'This is required <br />';
+        }else{
+            $vehicle_name = $_POST['vehicle_name'];
+        }
+
+        if(empty($_POST['vehicle_colour'])){
+            $errors['vehicle_colour'] = 'This is required <br />';
+        }else{
+            $vehicle_colour = $_POST['vehicle_colour'];
+        }
+
         $image = $_FILES['image'];
 
         $fileName = $_FILES['image']['name'];
@@ -77,38 +162,9 @@
             $errors['image'] = "You cannot upload files of this type";
         }
 
-        // if($_FILES['image']['error'] === 4){
-        //     $errors['image'] = 'Image Does Not Exist <br />';
-        // } else {
-        //     $fileName = $_FILES['image']['name'];
-        //     $fileSize = $_FILES['image']['size'];
-        //     $tmpName = $_FILES['image']['tmp_name'];
-
-        //     $validImageExtension = ['jpg', 'jpeg', 'png'];
-        //     $imageExtension = explode('.', $fileName);
-        //     $imageExtension = strtolower(end($imageExtension)){
-        //         if(!in_array($imageExtension, $validImageExtension)){
-        //             $errors['image'] = "Invalid Image Extension";
-        //         } else if($fileSize > 1000000){
-        //             $errors['image'] = "Image Size Is Too Large";
-        //         } else {
-        //             $newImageName = uniqid();
-        //             $newImageName .= '.' . $imageExtension;
-
-        //             move_uploaded_file($tmpName, '')
-        //         }
-        //     }
-        // }
-
-        $mode = $_POST['mode'];
-
-        if(empty($_POST['address'])){
-            $errors['address'] = 'An address is required <br />';
-        }else{
-            $address = $_POST['address'];
-        }
 
         if(array_filter($errors)){
+            
             // echo 'errors in the form';
         }else{
     
@@ -134,6 +190,8 @@
             $plate_no = mysqli_real_escape_string($conn, $_POST['plate_no']);
             $vehicle_name = mysqli_real_escape_string($conn, $_POST['vehicle_name']);
             $vehicle_colour = mysqli_real_escape_string($conn, $_POST['vehicle_colour']);
+            // $fileDestination = mysqli_real_escape_string($conn, $_POST['fileDestination']);
+            // die($fileDestination);
 
             $previous_reg_query = "SELECT * FROM REGISTRATION WHERE reg_no = '$reg_no' ";
             $result = mysqli_query($conn, $previous_reg_query);
@@ -143,11 +201,12 @@
             if(mysqli_query($conn, $previous_reg_query)){
                 // success
                 if($reg_checker != null){
-                    $errors['reg_no'] = 'This registration number has been taken';  
+                    $errors['reg_no'] = 'This registration number exists';  
                 } else {
+                    
                     // create sql
-                    $sql1 = "INSERT INTO registration(reg_no, first_name, last_name, phone_no, mode, address, middle_name, dob, state, lga, gender, status, nok_firstname, nok_middlename, nok_lastname, nok_relationship, nok_phoneno, nok_address) VALUES('$reg_no', '$first_name','$last_name', '$phone_no', '$mode', '$address', '$middle_name', '$dob', '$state', '$lga', '$gender', '$status', '$nok_firstname', '$nok_middlename', '$nok_lastname', '$nok_relationship', '$nok_phoneno', '$nok_address')";
-                    //die($sql1);
+                    $sql1 = "INSERT INTO registration(reg_no, first_name, last_name, phone_no, mode, address, middle_name, dob, state, lga, gender, status, nok_firstname, nok_middlename, nok_lastname, nok_relationship, nok_phoneno, nok_address, image, email, drivers_license) VALUES('$reg_no', '$first_name','$last_name', '$phone_no', '$mode', '$address', '$middle_name', '$dob', '$state', '$lga', '$gender', '$status', '$nok_firstname', '$nok_middlename', '$nok_lastname', '$nok_relationship', '$nok_phoneno', '$nok_address', '$fileDestination', '$email', '$drivers_license')";
+                    
                     
                     if(mysqli_query($conn, $sql1)){
                         // success
@@ -173,23 +232,15 @@
                 echo 'query error: ' . mysqli_error($conn);
             }
     
-            // // create sql
-            // $sql = "INSERT INTO registration(reg_no, first_name, last_name, phone_no, mode, address, middle_name, dob, state, lga) VALUES('$reg_no', '$first_name','$last_name', '$phone_no', '$mode', $address, $middle_name, $dob, $state, $lga)";
-    
-            // // save to db & check
-            // if(mysqli_query($conn, $sql)){
-            //     // success
-            //     header('Location: index.php');
-            // } else {
-            //     // error
-            //     echo 'query error: ' . mysqli_error($conn);
-            // }
+            
             mysqli_free_result($result);
             mysqli_close($conn);
         }
         
     }   
-    
+    if(isset($_POST['cancel'])){
+        header('Location: index.php');
+    }
 
 ?>
 
@@ -198,41 +249,26 @@
     <?php include('templates/header.php') ?>
     <link rel="stylesheet" href="css/regstyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
-    <link rel="stylesheet" href="regstyle.css">
-</head> -->
+    <script type="text/javascript" src="js/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
 <body>
+
 <?php include('templates/nav.php') ?>
-    <!-- <section id='menu'>
-        <div class="logo">
-            <img src="/Images/University-of-Lagos-courses.jpg" alt=""> 
-            <h2>University Of Lagos</h2>
-        </div>
-        <div class="items">
-            <li><i class="fa fa-pie-chart" aria-hidden="true"></i><a href="#">Dashboard</a></li>
-            <li><i class="fa fa-user" aria-hidden="true"></i><a href="#">Manage Profile</a></li>
-            <li><i class="fa fa-pie-chart" aria-hidden="true"></i><a href="#">Status</a></li>
-            <li><i class="fa fa-cog" aria-hidden="true"></i><a href="#">Settings</a></li>
-        </div>
-    </section> -->
     <section id="form">
         <div class="container">
-            <h3 class="i-name">Add User</h3>
+            <h3 class="i-name">Add Driver</h3>
 
             <!-- Personal -->
             <h4 class="name">Personal</h4>
             <!-- <div class="title">Registration</div> -->
             <form action="form.php" method="POST" enctype="multipart/form-data">
             <div class="upload">
-                <img src="Images/630729-200.png" width="100" height="100" alt="">
-                <div class="">
-                    <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png" value="">
+                <img src="Images/630729-200.png" width="100" height="100" alt="" id="profileDisplay" >
+                
+                    <input type="file" name="image" id="image"  accept=".jpg, .jpeg, .png" value=""   >
                     <i class="fa fa-solid fa-camera" style="color: #ffffff;"></i>
-                </div>
+                    <?php echo $errors['image']; ?>
             </div>
                 <div class="user-details">
                     
@@ -244,26 +280,35 @@
                     <div class="input-box">
                         <span class="details">First Name</span>
                         <input type="text" name="first_name" placeholder="First name" value="<?php echo htmlspecialchars($first_name) ?>" >
+                        <div class="red-text"><?php echo $errors['first_name']; ?></div>
                     </div>
                     <div class="input-box">
                         <span class="details">Middle Name</span>
                         <input type="text" name="middle_name" placeholder="Middle Name" value="<?php echo htmlspecialchars($middle_name) ?>" >
+                        <div class="red-text"><?php echo $errors['middle_name']; ?></div>
                     </div>
                     <div class="input-box">
                         <span class="details">Surname</span>
                         <input type="text" name="last_name" placeholder="Surname" value="<?php echo htmlspecialchars($last_name) ?>" >
+                        <div class="red-text"><?php echo $errors['last_name']; ?></div>
                     </div>
                     <div>
                         <p class="rad">Gender</p>
-                        <input type="radio" name="gender" value="Male">
+                        <input type="radio" name="gender" value="<?php if (isset($gender) && $gender === 'Male') echo 'checked'; ?>">
                         <label for="male" class="rad-space">Male</label>
-                        <input type="radio" name="gender" value="Female">
+                        <input type="radio" name="gender" value="<?php if (isset($gender) && $gender === 'Female') echo 'checked'; ?>">
                         <label for="female">Female</label>
+                        <div class="red-text"><?php echo $errors['gender']; ?></div>
                     </div>
                     <div class="input-box">
                         <span class="details">Phone Number</span>
                         <input type="text" name="phone_no" placeholder="000-000-0000" value="<?php echo htmlspecialchars($phone_no) ?>" >
                         <div class="red-text"><?php echo $errors['phone_no']; ?></div>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Email</span>
+                        <input type="email" name="email" placeholder="" value="<?php echo htmlspecialchars($email) ?>" >
+                        
                     </div>
                     <div class="input-box">
                         <span class="details">Mode</span>
@@ -272,26 +317,31 @@
                             <option value="Shuttle" <?php if($mode == 'Shuttle'){echo 'selected';} ?>>Shuttle</option>
                             <option value="Cab" <?php if($mode == 'Cab'){echo 'selected';} ?>>Cab</option>
                         </select>
+                        <div class="red-text"><?php echo $errors['mode']; ?></div>
                     </div>
                     <div class="input-box">
                         <span class="details">Address</span>
                         <input type="text" name="address" placeholder="Enter your address" value="<?php echo htmlspecialchars($address) ?>">
+                        <div class="red-text"><?php echo $errors['address']; ?></div>
                     </div>
                     <div class="input-box">
                         <span class="details">Date of Birth</span>
                         <input type="date" name="dob" placeholder="DD/MM/YYYY" value="<?php echo htmlspecialchars($dob) ?>" >
+                        <div class="red-text"><?php echo $errors['dob']; ?></div>
                     </div>
                     <div class="input-box">
                         <span class="details">State</span>
                         <input type="text" name="state" placeholder="State" value="<?php echo htmlspecialchars($state) ?>" >
+                        <div class="red-text"><?php echo $errors['state']; ?></div>
                     </div>
                     <div class="input-box">
                         <span class="details">LGA</span>
                         <input type="text" name="lga" placeholder="LGA" value="<?php echo htmlspecialchars($lga) ?>" >
+                        <div class="red-text"><?php echo $errors['lga']; ?></div>
                     </div>
-                    <div class="input-box">
+                    <!-- <div class="input-box">
                         <input type="hidden" name="" placeholder="" value="" >
-                    </div>
+                    </div> -->
 
                     <!-- Next Of Kin -->
                     <h4 class="name">Next of Kin</h4>
@@ -301,6 +351,7 @@
                     <div class="input-box">
                         <span class="details">First Name</span>
                         <input type="text" name="nok_firstname" placeholder="First Name" value="<?php echo htmlspecialchars($nok_firstname) ?>" >
+                        <div class="red-text"><?php echo $errors['nok_firstname']; ?></div>
                     </div>
                     <div class="input-box">
                         <span class="details">Middle Name</span>
@@ -309,22 +360,27 @@
                     <div class="input-box">
                         <span class="details">Last Name</span>
                         <input type="text" name="nok_lastname" placeholder="Last Name" value="<?php echo htmlspecialchars($nok_lastname) ?>" >
+                        <div class="red-text"><?php echo $errors['nok_lastname']; ?></div>
                     </div>
                     <div class="input-box">
                         <span class="details">Relationship</span>
                         <input type="text" name="nok_relationship" placeholder="Relationship" value="<?php echo htmlspecialchars($nok_relationship) ?>" >
+                        <div class="red-text"><?php echo $errors['nok_relationship']; ?></div>
                     </div>
                     <div class="input-box">
                         <span class="details">Phone Number</span>
                         <input type="text" name="nok_phoneno" placeholder="000-000-0000" value="<?php echo htmlspecialchars($nok_phoneno) ?>" >
+                        <div class="red-text"><?php echo $errors['nok_phoneno']; ?></div>
                     </div>
                     <div class="input-box">
                         <!-- <span class="details">Date of Birth</span> -->
                         <input type="hidden" name="nok_dob" placeholder="DD/MM/YYYY" value="<?php echo htmlspecialchars($nok_dob) ?>" >
+                        <div class="red-text"><?php echo $errors['nok_dob']; ?></div>
                     </div>
                     <div class="long-input-box">
                         <span class="details">Address</span>
                         <input type="text" name="nok_address" placeholder="Enter your address" value="<?php echo htmlspecialchars($nok_address) ?>">
+                        <div class="red-text"><?php echo $errors['nok_address']; ?></div>
                     </div>
 
                     <!-- Vehicle Details -->
@@ -335,10 +391,12 @@
                     <div class="input-box">
                         <span class="details">Vehicle Name</span>
                         <input type="text" name="vehicle_name" placeholder="Vehicle Name" value="<?php echo htmlspecialchars($vehicle_name) ?>" >
+                        <div class="red-text"><?php echo $errors['vehicle_name']; ?></div>
                     </div>
                     <div class="input-box">
                         <span class="details">Vehicle Colour</span>
                         <input type="text" name="vehicle_colour" placeholder="Vehicle Colour" value="<?php echo htmlspecialchars($vehicle_colour) ?>" >
+                        <div class="red-text"><?php echo $errors['vehicle_colour']; ?></div>
                     </div>
                     <div class="input-box">
                         <span class="details">Plate Number</span>
@@ -347,16 +405,16 @@
                     </div>
                     <div class="input-box">
                         <span class="details">Driver's License</span>
-                        <input type="text" name="" placeholder="Driver's License" value="" >
+                        <input type="text" name="drivers_license" placeholder="Driver's License" value="<?php echo htmlspecialchars($drivers_license) ?>" >
                     </div>
                     <div class="input-box">
-                        <span class="details">Route</span>
-                        <input type="text" name="" placeholder="Route" value="" >
+                        <!-- <span class="details">Route</span> -->
+                        <input type="hidden" name="" placeholder="Route" value="" >
                     </div>
                     <div class="input-box">
                         <input type="hidden" name="" placeholder="Route" value="" >
                     </div>
-                    <h4 class="name">Clearance</h4>
+                    <!-- <h4 class="name">Clearance</h4>
                     <div class="input-box">
                         <input type="hidden" name="" placeholder="Route" value="" >
                     </div>
@@ -367,7 +425,7 @@
                     <div class="input-box">
                         <span class="details">Date of Clearance</span>
                         <input type="date" name="" placeholder="DD/MM/YYYY" value="" >
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="button" id="submit">
@@ -379,5 +437,24 @@
             </form>
         </div>
     </section>
+    <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var imageInput = document.getElementById('image');
+    var imagePreview = document.getElementById('profileDisplay');
+
+    imageInput.addEventListener('change', function(event) {
+      var input = event.target;
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          imagePreview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    });
+  });
+</script>
 </body>
 </html>

@@ -29,8 +29,8 @@ body{
     padding: 30px 0 0 30px;
 }
 
-#menu .logo h3{
-    font-weight: 400;
+#menu .logo h5{
+    font-weight: 600;
 }
 
 #menu .logo img{
@@ -39,7 +39,7 @@ body{
 }
 
 #menu .items{
-    margin-top: 80px;
+    margin-top: 60px;
 }
 
 #menu .items li{
@@ -68,6 +68,13 @@ body{
     font-size: 14px;
     margin: 0 10px 0 25px;
 }
+
+ .logout {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
 #menu .items li i:hover a,
 #menu .items li i:hover i{
     color: #f3f4f6;

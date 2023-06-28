@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     include('config/db_connect.php');
 
     if(isset($_GET['id'])){
@@ -74,7 +75,9 @@
         }
     }
 
-    
+    if(isset($_POST['cancel'])){
+        header('Location: index.php');
+    }
 
 ?>
 
@@ -107,7 +110,14 @@
         <div class="container">
             <h3 class="i-name">Dashboard</h3>
             <!-- <div class="title">Registration</div> -->
-            <form action="update.php?id_new=<?php echo $id; ?>" method="POST">
+            <form action="update.php?id_new=<?php echo $id; ?>" method="POST" enctype="multipart/form-data">
+            <div class="upload">
+                <img src="Images/630729-200.png" width="100" height="100" alt="" id="profileDisplay" onchange="displayImage(this)">
+                
+                    <input type="file" name="image" id="image"  accept=".jpg, .jpeg, .png" value=""  onclick="triggerClick()" >
+                    <i class="fa fa-solid fa-camera" style="color: #ffffff;"></i>
+                
+            </div>
                 <div class="user-details">
                     <!-- <div class="input-box">
                         <span class="details">Date</span>
@@ -127,8 +137,8 @@
                         <input type="text" name="middle_name" placeholder="Middle name" value="<?php echo htmlspecialchars($registration['middle_name']) ?>" >
                     </div>
                     <div class="input-box">
-                        <span class="details">Last Name</span>
-                        <input type="text" name="last_name" placeholder="Last Name" value="<?php echo htmlspecialchars($registration['last_name']) ?>" >
+                        <span class="details">Surname</span>
+                        <input type="text" name="last_name" placeholder="Surname" value="<?php echo htmlspecialchars($registration['last_name']) ?>" >
                     </div>
                     <div>
                         <p class="rad">Gender</p>
@@ -140,6 +150,10 @@
                     <div class="input-box">
                         <span class="details">Phone Number</span>
                         <input type="number" name="phone_no" placeholder="000-000-0000" value="<?php echo htmlspecialchars($registration['phone_no']) ?>" >
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Email</span>
+                        <input type="email" name="email" placeholder="" value="<?php echo htmlspecialchars($registration['email']) ?>" >
                     </div>
                     <div class="input-box">
                         <span class="details">Mode</span>
@@ -165,9 +179,9 @@
                         <span class="details">LGA</span>
                         <input type="text" name="lga" placeholder="LGA" value="<?php echo htmlspecialchars($registration['lga']) ?>" >
                     </div>
-                    <div class="input-box">
+                    <!-- <div class="input-box">
                         <input type="hidden" name="" placeholder="" value="" >
-                    </div>
+                    </div> -->
                     
                     <!-- Next of Kin -->
                     <h4 class="name">Next of Kin</h4>
@@ -183,8 +197,8 @@
                         <input type="text" name="nok_middlename" placeholder="Middle name" value="<?php echo htmlspecialchars($registration['nok_middlename']) ?>" >
                     </div>
                     <div class="input-box">
-                        <span class="details">Last Name</span>
-                        <input type="text" name="nok_lastname" placeholder="Last Name" value="<?php echo htmlspecialchars($registration['nok_lastname']) ?>" >
+                        <span class="details">Surname</span>
+                        <input type="text" name="nok_lastname" placeholder="Surname" value="<?php echo htmlspecialchars($registration['nok_lastname']) ?>" >
                     </div>
                     <div class="input-box">
                         <span class="details">Relationship</span>
@@ -225,20 +239,23 @@
                         <input type="text" name="" placeholder="Driver's License" value="" >
                     </div>
                     <div class="input-box">
-                        <span class="details">Route</span>
-                        <input type="text" name="" placeholder="Route" value="" >
+                        <!-- <span class="details">Route</span> -->
+                        <input type="hidden" name="" placeholder="Route" value="" >
                     </div>
-                    <div class="input-box">
+                    <!-- <div class="input-box">
                         <span class="details">University Clearance</span>
                         <input type="text" name="" placeholder="University Clearance" value="" >
                     </div>
                     <div class="input-box">
                         <span class="details">Date of Clearance</span>
                         <input type="date" name="" placeholder="DD/MM/YYYY" value="" >
-                    </div>
+                    </div> -->
                 </div>
                 <div class="button" id="submit">
                     <input type="submit" name="save" value="Save">
+                </div>
+                <div class="button2" id="cancel">
+                    <input type="submit" name="cancel" value="Cancel">
                 </div>
             </form>
         </div>

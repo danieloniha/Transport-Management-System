@@ -8,6 +8,8 @@
 
         $username = $_POST['username'];
         $phone_no = $_POST['phone_no'];
+        $email = $_POST['email'];
+        $usertype = $_POST['usertype'];
         $pwd = $_POST['pwd'];
         $pwd_repeat = $_POST['pwd_repeat'];
 
@@ -36,8 +38,8 @@
             exit();
         }
 
-        createUser($conn, $username, $phone_no, $pwd);
-
+        createUser($conn, $username, $phone_no, $email, $usertype, $pwd);
+        
     }
 ?>
 
@@ -56,10 +58,13 @@
     <input type="checkbox" id="check">
     <div class="login form">
     <header>Signup</header>
-    <p class="errors"><?php echo $errors; ?></p>
+    <?php echo '<h2 class="alert alert-danger text-white"> '.$errors.' </h2>'; ?>
+    <!-- <p class="errors"><?php echo $errors; ?></p> -->
       <form action="signup.php" method="POST">
         <input type="text" name="username" placeholder="Enter Username">
-        <input type="text" name="phone_no" placeholder="Enter Phone Number">
+        <input type="tel" name="phone_no" placeholder="Enter Phone Number">
+        <input type="email" name="email" placeholder="Enter Email">
+        <input type="hidden" name="usertype" value="user" placeholder="Enter Email">
         <input type="password" name="pwd" placeholder="Enter your password">
         <input type="password" name="pwd_repeat" placeholder="Confirm your password">
         <input type="submit" name="submit" class="button" value="SIGN UP">
@@ -70,11 +75,12 @@
         </span>
       </div>
     </div>
+    <!-- Login -->
     <div class="registration form">
       <header>Signup</header>
       <form action="signup.php" method="POST">
         <input type="text" name="username" placeholder="Enter Username">
-        <input type="text" name="phone_no" placeholder="Enter Phone Number">
+        <input type="tel" name="phone_no" placeholder="Enter Phone Number">
         <input type="password" name="pwd" placeholder="Enter your password">
         <input type="password" name="pwd_repeat" placeholder="Confirm your password">
         <input type="submit" name="submit1" class="button" value="SIGN UP">

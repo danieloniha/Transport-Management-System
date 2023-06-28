@@ -1,5 +1,5 @@
 <?php
-    
+    session_start();
     include('config/db_connect.php');
 
     $query = "SELECT DISTINCT mode FROM registration";
@@ -88,7 +88,9 @@
             Dashboard
         </h3>
         <div class="cards">
+        <a href="table.php">
             <div class="card-single">
+                
                 <div>
                     <?php 
                         $dash_drivers = "SELECT * FROM registration";
@@ -99,6 +101,7 @@
                         } else {
                             echo '<h1>0</h1>';
                         }
+
                     ?>
                     
                     <span class="card-text">Drivers</span>
@@ -106,10 +109,10 @@
                 <div>
                     <span class="fa fa-solid fa-car" style="color: #0059a5;" aria-hidden="true"></span>
                 </div>
-            </div>
+            </div></a>
             <div class="card-single">
                 <div>
-                    <h1>79</h1>
+                    <h1>8,000</h1>
                     <span class="card-text">Payments</span>
                 </div>
                 <div>
@@ -118,109 +121,34 @@
             </div>
             <div class="card-single">
                 <div>
-                    <h1>79</h1>
+                    <?php 
+                    $dash_penalty = "SELECT * FROM driver_penalty";
+                    $dash_penalty_num = mysqli_query($conn, $dash_penalty);
+
+                    if($dash_totalP = mysqli_num_rows($dash_penalty_num)){
+                        echo '<h1>'.$dash_totalP.'</h1>';
+                    } else {
+                        echo '<h1>0</h1>';
+                    }
+                    ?>
                     <span class="card-text">Penalties</span>
                 </div>
                 <div>
                     <span class="fa fa-solid fa-flag" style="color: #0059a5;" aria-hidden="true"></span>
                 </div>
             </div>
-            <div class="card-single">
+            <!-- <div class="card-single">
                 <div>
                     <h1>79</h1>
                     <span class="card-text">Drivers</span>
                 </div>
                 <div>
                     <span class="fa fa-solid fa-car" style="color: #0059a5;" aria-hidden="true"></span>
-                </div>
+                </div> -->
             </div>
         </div>
-        <div class="user-details">
-            <div class="input-box" id="filter">
-                        <span class="details">Mode</span>
-                        <select name="fetchval" id="fetchval" onchange="selectMode()">
-                        <option value="All">All</option>
-                        <?php while($row = mysqli_fetch_array($res)): ?>
-                            <option value="<?php echo $row['mode']; ?>"><?php echo $row['mode']; ?></option>
-                            <!-- <option value="All">All</option>
-                            <option value="Shuttle">Shuttle</option>
-                            <option value="Cab">Cab</option> -->
-                        <?php endwhile; ?>
-                        </select>
-                    </div>
-        <div class="button" id="submit">
-            <a href="form.php"><input type="submit" value="Add User"></a>
-            </div></div>
-            <div class="board">
-            <table width="100%">
-                <thead>
-                    <tr>
-                        <td>No</td>
-                        <td>RegNo</td>
-                        <td>Name</td>
-                        <td>Phone No</td>
-                        <!-- <td>Address</td> -->
-                        <!-- <td>DOB</td> -->
-                        <td>Mode</td>
-                        <td></td>
-                    </tr>
-                </thead>
-                <tbody id="ans">             
-
-                 <?php $count = 1; foreach($registration as $driver){ ?>
-                    <tr scope="row">
-                        <td class="driver">
-                            <div class="driver-id">
-                                <h5><?php echo $count++; ?></h5>
-                            </div>
-                        </td>
-                        <td class="driver">
-                            <div class="driver-de">
-                                <h5><?php echo htmlspecialchars($driver['reg_no']); ?></h5>
-                            </div>
-                        </td>
-                        <td class="driver-phone">
-                            <h5><?php echo htmlspecialchars($driver['first_name'] . ' ' . $driver['last_name']); ?></h5>
-                            <!-- <p>Web Dev</p> -->
-                        </td>
-                        <td class="driver-plate">
-                            <h5><?php echo htmlspecialchars($driver['phone_no']); ?></h5>
-                        </td>
-                        <td class="driver-reg">
-                            <h5><?php echo htmlspecialchars($driver['mode']); ?></h5>
-                        </td>
-                        <td class="edit"><a href="details.php?id=<?php echo htmlspecialchars($driver['id']); ?>">View</a></td>
-                        <td class="edit"><a href="update.php?id=<?php echo htmlspecialchars($driver['id']); ?>">Edit</a></td>
-                        <td class="edit"><a href="delete.php?id=<?php echo htmlspecialchars($driver['id']); ?>">Delete</a></td>
-                        <!-- <td class="edit"><form action="index.php" method="POST">
-                            <input type="hidden" name="id_to_delete" value="<?php echo $registration['id'] ?>">
-                            <input type="submit" name="delete" class="edit_delete" value="Delete">
-                        </form>
-                        </td> -->
-                    </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
+        <!-- Index B -->
         <script>
-            // $(document).ready(function(){
-            //     $("#fetchval").on('change',function(){
-            //         var value = $(this).val();
-            //         alert(value);
-    
-            //         // $.ajax({
-            //         //     url: "fetch.php",
-            //         //     type:"POST",
-            //         //     data:'request=' + value,
-            //         //     beforeSend:function(){
-
-            //         //     },
-            //         //     success:function(data){
-            //         //         $(".container").html*(data)
-            //         //     }
-            //         // });
-            //     });
-            // });
             document.addEventListener("DOMContentLoaded", () => {
                 const rows = document.querySelectorAll("tr[data-href]");
 
@@ -231,11 +159,7 @@
                 });
             });
 
-            // function addRow () {
-            //     document.querySelector("tbody").insertAdjacentHTML("beforeend", `
-                
-            //     `);
-            // };
+           
 
             $(document).ready(function () {
                 $(document.body).on("click", "tr[data-href]", function () {
@@ -244,26 +168,7 @@
             });
         </script>
     </section>
-    <!-- <script>
-        $(document).ready(function(){
-                $("#fetchval").on('change',function(){
-                    var value = $(this).val();
-                    alert(value);
     
-                    $.ajax({
-                        url:"fetch.php",
-                        type:"POST",
-                        data:'request=' + value,
-                        beforeSend:function(){
-
-                        },
-                        success:function(data){
-                            $(".container").html*(data)
-                        }
-                    });
-                });
-            });
-    </script> -->
 </body>
 </html>
 <?php 

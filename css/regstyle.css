@@ -56,8 +56,8 @@ body{
     padding: 30px 0 0 30px;
 }
 
-#menu .logo h3{
-    font-weight: 400;
+#menu .logo h5{
+    font-weight: 600;
 }
 
 #menu .logo img{
@@ -66,7 +66,7 @@ body{
 }
 
 #menu .items{
-    margin-top: 80px;
+    margin-top: 60px;
 }
 
 #menu .items li{
@@ -95,6 +95,13 @@ body{
     font-size: 14px;
     margin: 0 10px 0 25px;
 }
+
+.logout {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
 #menu .items li i:hover a,
 #menu .items li i:hover i{
     color: #f3f4f6;
@@ -109,6 +116,7 @@ body{
     font-weight: 300px;
     transition: 0.3s ease;
 }
+
 
 #form{
     width: calc(100% - 300px);
@@ -258,7 +266,6 @@ input[type=file]::-webkit-file-upload-button{
     letter-spacing: 1px;
     background: #0059A5;
 }
-
 .button2{
     height: 48px;
     margin-top: 24px;
@@ -267,11 +274,93 @@ input[type=file]::-webkit-file-upload-button{
     height: 100%;
     width: 100%;
     outline: none;
-    color: #0059A5;
+    color: rgba(0, 0, 0, 0.856);
     border: none;
     font-size: 18px;
     font-weight: 500;
     border-radius: 4px;
     letter-spacing: 1px;
     background: rgb(227, 227, 227);
+}
+
+.board{
+    width: 94%;
+    margin: 10px 0 30px 30px;
+    overflow: auto;
+    background: white;
+    border-radius: 8px;
+}
+.board h5{
+    font-weight: 400;
+    font-size: 14px;
+}
+.board p{
+    font-weight: 400;
+    font-size: 13px;
+    color: #787d8d;
+}
+
+/* .btn input{
+    height: 30px;
+    width: 60px;
+    outline: none;
+    color: white;
+    border: none;
+    font-size: 10px;
+    font-weight: 400;
+    border-radius: 4px;
+    background: #0059A5;
+} */
+
+table{
+    border-collapse: collapse;
+}
+tr{
+    border-bottom: 1px solid #eef0f3;
+}
+tr[data-href] {
+    cursor: pointer;
+}
+thead tr td{
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 400;
+    background: #f9fafb;
+    text-align: start;
+    padding: 10px;
+}
+tbody tr td{
+    padding: 15px 10px;
+}
+
+#interface{
+    width: calc(100% - 300px);
+    margin-left: 300px;
+    position: absolute;
+}
+#interface .navigation{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 15px 30px;
+    border-bottom: 3px solid #594ef7;
+    position: fixed;
+    width: calc(100% - 300px);
+}
+#interface .navigation .search{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 14px;
+    border: 1px solid #d7dbe6;
+    border-radius: 4px;
+}
+#interface .navigation .search i{
+    margin-right: 14px;
+}
+#interface .navigation .search input{
+    border: none;
+    outline: none;
+    font-size: 14px;
 }
