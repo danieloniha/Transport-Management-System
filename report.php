@@ -1,16 +1,8 @@
-<?php 
-    session_start();
-    include('config/db_connect.php');
+<?php
+session_start();
+include('config/db_connect.php');
 
-    if(isset($_POST['submit_search'])){
-        $search = mysqli_real_escape_string($conn, $_POST['search']);
-        
-        $sql = "SELECT * FROM registration WHERE id LIKE '%$search%' OR reg_no LIKE '%$search%' OR first_name LIKE '%$search%' OR last_name LIKE '%$search%' OR phone_no LIKE '%$search%' OR mode LIKE '%$search%'";
 
-        $result = mysqli_query($conn, $sql);
-        $registration = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,16 +58,12 @@
         <div class="container">
             <h3 class="i-name">Report</h3>
             <!-- <h4 class="name">Personal</h4> -->
+            <div class="input-boxS">
+                <input type="text" name="search" id="searchInput" placeholder="Search">
+                <button onclick="searchTable()" value="Search">Search</button>
+            </div>
             <form action="report.php" method="POST">
                 <div class="user-details">
-                    <!-- <div class="input-box">
-                        <i class="fa fa-search"></i>
-                        <input type="text" name="search" placeholder="Search">
-                        <input type="submit" name="submit_search" value="Search">
-                    </div> -->
-                    <!-- <div class="input-box">   
-                        <input type="hidden" name="" placeholder="Search" value="" >
-                    </div> -->
                     <div class="input-box">
                         <span class="details">Select Report</span>
                         <select id="choice">
@@ -89,18 +77,18 @@
                     <div class="input-box" id="dynamicDropdowns">
                         <span class="details">Mode</span>
                         <select id="modeChoice">
-                            
-                            </select>
-                            <!-- The dynamically generated dropdowns will be inserted here -->
+
+                        </select>
+                        <!-- The dynamically generated dropdowns will be inserted here -->
                     </div>
                     <div class="input-box" id="dynamicDropdowns">
                         <span class="details">Status</span>
                         <select id="statusChoice">
-                            
+
                         </select>
-                            <!-- The dynamically generated dropdowns will be inserted here -->
+                        <!-- The dynamically generated dropdowns will be inserted here -->
                     </div>
-                    
+
                 </div>
             </form>
         </div>
@@ -116,26 +104,52 @@
                 <tbody id="tbody">
                 </tbody>
             </table>
-            <!-- <table width="100%">
-                <thead>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </thead>
-            </table> -->
+
         </div>
 
 
     </section>
-    <!-- <section id="interface">
-    
-    </section> -->
+
 </body>
 
 </html>
 
 <script>
+    function searchTable() {
+        // Retrieve the search term
+        var input = document.getElementById('searchInput');
+        var filter = input.value.toUpperCase();
+
+        // Get the table and rows
+        var table = document.getElementById('report');
+        var rows = table.getElementsByTagName('tr');
+
+        // Loop through all rows, hide/show based on search term
+        for (var i = 1; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            var rowMatch = false;
+
+            // Loop through all cells in current row
+            for (var j = 0; j < cells.length; j++) {
+                var cell = cells[j];
+                if (cell) {
+                    var cellText = cell.textContent || cell.innerText;
+                    if (cellText.toUpperCase().indexOf(filter) > -1) {
+                        rowMatch = true;
+                        break;
+                    }
+                }
+            }
+
+            // Show/hide row based on match
+            if (rowMatch) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    }
+
     $(document).ready(function() {
         $("#choice").change(function() {
             var selectedValue = $(this).val();
@@ -172,27 +186,54 @@
 <script>
     $(document).ready(function() {
         // Initialize DataTables
-        var searchTable, mainColumns, dbColumns;
+        var searchTable, mainColumns, dbColumns, global_query = null,
+            mode_query = null,
+            status_query = null;
 
 
         // Handle dropdown change event
         $('#modeChoice').change(function() {
-            console.log('clicked')
-            var table, columns, dbC, query;
-            if (searchTable == 'registration') {
-                query = `mode = '${$(this).val()}'`;
-            }                 
-            console.log(query)  
-            reloadTable(searchTable, mainColumns, dbColumns, query)
+            //console.log('clicked')
+            var table, columns, dbC, query = null;
+            if ($(this).val() != 'All') {
+                if (searchTable == 'registration') {
+                    query = `mode = '${$(this).val()}'`;
+                } else if (searchTable == 'penalty') {
+                    query = `reg.mode = '${$(this).val()}'`;
+                } else if (searchTable == 'inspection') {
+                    query = `reg.mode = '${$(this).val()}'`;
+                }
+                mode_query = query;
+                global_query = status_query != null ? mode_query + ' AND ' + status_query : query;
+                console.log(global_query)
+                reloadTable(searchTable, mainColumns, dbColumns, global_query)
+            } else {
+                mode_query = query;
+                global_query = status_query;
+                console.log(global_query)
+                reloadTable(searchTable, mainColumns, dbColumns, global_query)
+            }
+
+
         });
         $('#statusChoice').change(function() {
-            console.log('clicked')
-            var table, columns, dbC, query;
-            if (searchTable == 'penalty') {
-                query = `status = '${$(this).val()}'`;
-            }                 
-            console.log(query)  
-            reloadTable(searchTable, mainColumns, dbColumns, query)
+            //console.log('clicked')
+            var table, columns, dbC, query = null;
+            if ($(this).val() != 'All') {
+                if (searchTable == 'penalty') {
+                    query = `dp.status = '${$(this).val()}'`;
+                }
+                status_query = query;
+                global_query = mode_query != null ? status_query + ' AND ' + mode_query : query;
+                console.log(global_query)
+                reloadTable(searchTable, mainColumns, dbColumns, global_query)
+            } else {
+                status_query = query;
+                global_query = mode_query;
+                console.log(global_query)
+                reloadTable(searchTable, mainColumns, dbColumns, global_query)
+            }
+
         });
 
         function reloadTable(table, columns, dbC, query) {
@@ -204,7 +245,7 @@
                     table: table,
                     columns: columns,
                     dbC: dbC,
-                    query : query
+                    query: query
                 },
                 success: function(response) {
                     // Clear existing table data
@@ -262,12 +303,15 @@
                 table = 'inspection';
                 columns = ['reg no', 'name', 'phone no', 'mode', 'Inspect ID', 'Date Created'];
                 dbC = ['reg_no', 'first_name', 'phone_no', 'mode', 'answer'];
-            }          
-            searchTable = table;  
+            }
+            searchTable = table;
             mainColumns = columns;
             dbColumns = dbC;
 
             reloadTable(searchTable, mainColumns, dbColumns, null)
         });
+
+
+
     });
 </script>

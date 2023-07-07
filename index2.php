@@ -91,7 +91,7 @@
             
             <div class="card-single">
                 <div>
-                    <h1>2</h1>
+                    <h1>0</h1>
                     <span class="card-text">Messages</span>
                 </div>
                 <div>
@@ -100,12 +100,13 @@
             </div>
             <div class="card-single">
                 <div>
-                    <h1>2</h1>
+                    <h1>0</h1>
                     <span class="card-text">Penalties</span>
                 </div>
                 <div>
                     <span class="fa fa-solid fa-flag" style="color: #0059a5;" aria-hidden="true"></span>
                 </div>
+            </div>
             </div>
             <!-- <div class="card-single">
                 <div>

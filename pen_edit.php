@@ -84,6 +84,7 @@
 
         if(mysqli_query($conn, $sql5)){
             // success
+            $_SESSION['status'] = "Penalty Edited Successfully";
             header('Location: penalty.php');
         } else {
             // error

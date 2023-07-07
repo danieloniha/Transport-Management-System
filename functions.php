@@ -120,11 +120,7 @@
             session_start();
             $_SESSION['id'] = $uidExists['id'];
             $_SESSION['phone_no'] = $uidExists['phone_no'];
-            if($_SESSION['usertype'] == 'admin'){
-                header("location: index.php");
-            } else {
-                header("location: index2.php");
-            }
+            header("location: index.php");
             
             exit();
         }

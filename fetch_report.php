@@ -76,10 +76,10 @@
     // Retrieve data from the specified table and format it as an array
     if($table == 'penalty'){
       $query = "SELECT reg.reg_no, reg.first_name, reg.mode, p.offence, p.penalty, dp.amount, dp.status 
-      FROM registration AS reg JOIN driver_penalty AS dp ON reg.reg_no = dp.reg_no JOIN penalty AS p ON dp.penalty_id = p.id";
+      FROM registration AS reg JOIN driver_penalty AS dp ON reg.reg_no = dp.reg_no JOIN penalty AS p ON dp.penalty_id = p.id $whereClause";
     } else if($table == 'inspection'){
       $query = "SELECT reg.reg_no, reg.first_name, reg.phone_no, reg.mode, d.id, d.date_created FROM registration AS reg JOIN 
-      driver_inspect AS d ON reg.reg_no = d.reg_no";
+      driver_inspect AS d ON reg.reg_no = d.reg_no $whereClause";
     } else {
       $query = "SELECT $columnNames FROM $table $whereClause";
     }

@@ -281,9 +281,10 @@ tbody tr td{
     font-weight: 600;
 }
 
-.edit_delete{
-    background: none;
+.edit_delete a{
     text-decoration: underline;
-    border: none;
-    color: red;
+    font-size: 14px;
+    color: #554cd1;
+    font-weight: 600;
 }
+

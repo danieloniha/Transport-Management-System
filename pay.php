@@ -1,5 +1,6 @@
 <?php
 session_start();
+//include('templates/security.php');
 include('config/db_connect.php');
 
 $currentUser = $_SESSION['phone_no'];
@@ -114,11 +115,12 @@ $res2 = mysqli_query($conn, $sql2);
 
     function payWithPaystack(e) {
       e.preventDefault();
-
+      let am = $("#payment_type option:selected").attr('amount');
+      console.log(am);
       let handler = PaystackPop.setup({
         key: 'pk_test_dc355c64a5241254bfbc5b54a517b86cb6682723', // Replace with your public key
         email: document.getElementById("email-address").value,
-        amount: 2000 * 100,
+        amount: am * 100,
         //amount: document.getElementById("amount").value * 100,
         ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
         // label: "Optional string that replaces customer email"

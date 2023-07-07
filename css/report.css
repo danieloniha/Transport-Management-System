@@ -386,3 +386,32 @@ tbody tr td{
     outline: none;
     font-size: 14px;
 }
+
+.input-boxS input{
+    height: 48px;
+    width: 100%;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding-left: 15px;
+    font-size: 16px;
+}
+.input-boxS{
+    display: flex;
+    margin-bottom: 36px;
+    width: calc(100% / 2 - 20px);
+}
+.input-boxS button{
+    width: 100px;
+    background-color: #0059A5;
+    color: white;
+    /* display: inline-block; */
+    text-align: center;
+    font-size: 16px;
+    padding: 12px 28px;
+    border: none;
+    margin-right: 12px;
+    /* justify-content: flex-start;
+    align-items: center; */
+    /* border-radius: 4px; */
+}

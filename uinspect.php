@@ -1,4 +1,8 @@
 <?php
+    require_once __DIR__ . '/vendor/autoload.php';
+
+    use Mpdf\Mpdf;
+
     session_start();
     include('config/db_connect.php');
 
@@ -81,10 +85,32 @@
 
             $sql = "INSERT INTO user_inspect(reg_no, name, start_work, drivers_license, payment_year, rrr, amount, receipt, date)
             VALUES('$reg_no', '$name', '$start_work', '$drivers_license', '$payment_year', '$rrr', '$amount', '$receipt', '$date')";
+            
 
             if(mysqli_query($conn, $sql)){
                 $_SESSION['status'] = "Form Submitted";
                 $_SESSION['status_code'] = "success";
+                $data = '';
+                $data.='<h1>Your Details</h1>';
+
+                $data.= '<strong>Reg No</strong>' . $reg_no . '<br />';
+                $data.= '<strong>Name</strong>' . $name . '<br />';
+                $data.= '<strong>Work Date</strong>' . $start_work . '<br />';
+                $data.= '<strong>Drivers License</strong>' . $drivers_license . '<br />';
+                $data.= '<strong>Year of Payment</strong>' . $payment_year . '<br />';
+                $data.= '<strong>RRR Number</strong>' . $rrr . '<br />';
+                $data.= '<strong>Amount</strong>' . $amount . '<br />';
+                $data.= '<strong>Receipt</strong>' . $receipt . '<br />';
+                $data.= '<strong>Date</strong>' . $date . '<br />';
+
+                $mpdf = new Mpdf();
+                ob_start();
+                $mpdf->WriteHTML($data);
+                $pdfContent = ob_get_contents();
+                ob_end_clean();
+
+                $mpdf->Output('Inspection File.pdf', 'D');
+                echo $pdfContent;
                 header('Location:uinspect.php');
             } else {
                 $_SESSION['status'] = "Error";
@@ -93,10 +119,11 @@
             }
         
     }
+    
 }
 
     if(isset($_POST['cancel'])){
-        header('Location: index2.php');
+        header('Location: index.php');
     }
     
 ?>
@@ -176,35 +203,12 @@
             </form>
         </div>
     </section>
-    <!-- <?php
+    <?php
 
-    require_once __DIR__ . '/vendor/autoload.php';
+    
 
-
-    use Mpdf\Mpdf;
-
-    $data = '';
-    $data.='<h1>Your Details</h1>';
-
-    $data.= '<strong>Reg No</strong>' . $reg_no . '<br />';
-    $data.= '<strong>Name</strong>' . $name . '<br />';
-    $data.= '<strong>Work Date</strong>' . $start_work . '<br />';
-    $data.= '<strong>Drivers License</strong>' . $drivers_license . '<br />';
-    $data.= '<strong>Year of Payment</strong>' . $payment_year . '<br />';
-    $data.= '<strong>RRR Number</strong>' . $rrr . '<br />';
-    $data.= '<strong>Amount</strong>' . $amount . '<br />';
-    $data.= '<strong>Receipt</strong>' . $receipt . '<br />';
-    $data.= '<strong>Date</strong>' . $date . '<br />';
-
-    $mpdf = new Mpdf();
-    ob_start();
-    $mpdf->WriteHTML($data);
-    $pdfContent = ob_get_contents();
-    ob_end_clean();
-
-    $mpdf->Output('Inspection File.pdf', 'D');
-    echo $pdfContent;
-?> -->
+    
+?>
 </body>
 </html>
 

@@ -170,7 +170,7 @@
                     </div>
                     <div class="input-box">
                         <span class="details">University Clearance</span>
-                        <input type="text" name="" placeholder="University Clearance" value="" >
+                        <input type="text" name="" placeholder="University Clearance" value="<?php echo htmlspecialchars($registration['drivers_license']) ?>" >
                     </div>
                     <div class="input-box">
                         <span class="details">Date of Clearance</span>

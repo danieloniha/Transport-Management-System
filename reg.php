@@ -52,7 +52,7 @@
             $errors['plate_no'] = 'A plate number is required <br />';
         }else{
             $plate_no = $_POST['plate_no'];
-            if(strlen($plate_no) != 11){
+            if(strlen($plate_no) != 8){
                 $errors['plate_no'] = "Invalid Plate Number";
             }
         }
@@ -105,10 +105,13 @@
             $nok_lastname = $_POST['nok_lastname'];
         }
 
-        if(empty($_POST['nok_phoneno'])){
+        if (empty($_POST['nok_phoneno'])) {
             $errors['nok_phoneno'] = 'This is required <br />';
-        }else{
+        } else {
             $nok_phoneno = $_POST['nok_phoneno'];
+            if (!preg_match('/^[0-9]{11}+$/', $nok_phoneno)) {
+                $errors['nok_phoneno'] = "Invalid Phone Number";
+            }
         }
 
         if(empty($_POST['nok_relationship'])){
@@ -202,6 +205,7 @@
             $plate_no = mysqli_real_escape_string($conn, $_POST['plate_no']);
             $vehicle_name = mysqli_real_escape_string($conn, $_POST['vehicle_name']);
             $vehicle_colour = mysqli_real_escape_string($conn, $_POST['vehicle_colour']);
+            $drivers_license = mysqli_real_escape_string($conn, $_POST['drivers_license']);
             //$fileDestination = mysqli_real_escape_string($conn, $_POST['fileDestination']);
             
 

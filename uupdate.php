@@ -77,7 +77,7 @@
     }
 
     if(isset($_POST['cancel'])){
-        header('Location: index2.php');
+        header('Location: index.php');
     }
 
 ?>
@@ -219,7 +219,7 @@
                     </div>
                     <div class="input-box">
                         <span class="details">Driver's License</span>
-                        <input type="text" name="" placeholder="Driver's License" value="" >
+                        <input type="text" name="" placeholder="Driver's License" value="<?php echo htmlspecialchars($registration['drivers_license']) ?>" >
                     </div>
                     <div class="input-box">
                         <!-- <span class="details">Route</span> -->
